@@ -35,7 +35,7 @@ The 1d and 2d count file for the respective sample is named with the respective 
 |   +-- 4.txt
 ```
 
-The optional parameter sample_sheet_file is a ";" separated file, with addtional information about each sample. It has to contain the id or barcode in a column "Encdoding" and the actual sample name in the column "Sample". 
+The optional parameter sample_sheet_file is a semilcolon (";") separated file, with additional information about each sample. It has to contain the id or barcode in a column "Encdoding" and the actual sample name in the column "Sample". 
 This is to show the names of the samples in the plots instead of the id.
 
 In the result_directory several plots are saved, such as 
