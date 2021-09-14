@@ -87,9 +87,9 @@ plotMaxMut_1d <- function(refSeqChar, max_mut_nucl) {
 
 # plot mutation frequencey per position and wild type
 plotMutFreqPerPosPerWt <- function(i, coverage1d_all.df, nucl.df, mut=0) {
-  wtIdx1 <- which(coverage1d_all.df$wt == i & coverage1d_all.df$mutRate1>0)
-  wtIdx2 <- which(coverage1d_all.df$wt == i & coverage1d_all.df$mutRate2>0)
-  wtIdx3 <- which(coverage1d_all.df$wt == i & coverage1d_all.df$mutRate3>0)
+  wtIdx1 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate1>0)
+  wtIdx2 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate2>0)
+  wtIdx3 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate3>0)
     # wtIdx1 <- which(ref.df$asInt == i & coverage1d_all.df$mutRate1>0)
     # wtIdx2 <- which(ref.df$asInt == i & coverage1d_all.df$mutRate2>0)
     # wtIdx3 <- which(ref.df$asInt == i & coverage1d_all.df$mutRate3>0)
@@ -128,9 +128,9 @@ plotMutFreqPerPosPerWt <- function(i, coverage1d_all.df, nucl.df, mut=0) {
 }
 
 plotMutFreqPerSamplePerWtBoxplot <- function(i, coverage1d_all.df, nucl.df) {
-  wtIdx1 <- which(coverage1d_all.df$wt == i & coverage1d_all.df$mutRate1>0)
-  wtIdx2 <- which(coverage1d_all.df$wt == i & coverage1d_all.df$mutRate2>0)
-  wtIdx3 <- which(coverage1d_all.df$wt == i & coverage1d_all.df$mutRate3>0)
+  wtIdx1 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate1>0)
+  wtIdx2 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate2>0)
+  wtIdx3 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate3>0)
   # wtIdx1 <- which(ref.df$asInt == i & coverage1d_all.df$mutRate1>0)
   # wtIdx2 <- which(ref.df$asInt == i & coverage1d_all.df$mutRate2>0)
   # wtIdx3 <- which(ref.df$asInt == i & coverage1d_all.df$mutRate3>0)
