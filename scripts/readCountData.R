@@ -157,7 +157,7 @@ readCountData_2d <- function(countDir, ref.df, nucl.df) {
 #' @example
 #' getNucleotide()
 getNucleotide <- function() {
-  require("scales")
+  require("scales", quietly = T)
   # for illustration of nucleotides
   #nucleotideCols=brewer.pal(n = 4, name = "Dark2")
   nucl.df = data.frame(asChar=c("A","C","G","T"), asInt=seq(4), color=hue_pal()(4))
@@ -171,7 +171,7 @@ getNucleotide <- function() {
 #' @example
 #' getRefSeq(referenceFile, nucl.df)
 getRefSeq <- function(referenceFile, nucl.df) {
-  require(seqinr)
+  require("seqinr", quietly = T)
   # read and prepare reference information
   refSeqFasta = read.fasta(referenceFile)
   refSeqChar = toupper(as.vector(refSeqFasta[[1]]))

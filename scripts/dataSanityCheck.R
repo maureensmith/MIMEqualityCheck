@@ -110,9 +110,10 @@ ggsave(file=outputFile, plot = p_mutCounts_perSample, device = "pdf",width=40, h
 ps_mutFreqs <- lapply(samples,function(s) plotMutFreqPerWtForEachSample_1d(coverage1d_all.df[coverage1d_all.df$sample==s,],
                                                                          refSeq.df = refSeq.df, nucl.df= nucl.df))
 #p_mutCounts_perSample<-multiplot(plotlist = ps_mutCounts, cols = floor(sqrt(length(samples))))
-p_mutFreqs_perSample<-grid.arrange(grobs=ps_mutFreqs,ncol=floor(sqrt(length(samples))))
+colnums<-min(4,floor(sqrt(length(samples))))
+p_mutFreqs_perSample<-grid.arrange(grobs=ps_mutFreqs,ncol=colnums)
 outputFile = paste0(resultDir, "/mut_freqs_perSample_1d.pdf")
-ggsave(file=outputFile, plot = p_mutFreqs_perSample, device = "pdf",width=40, heigh=10*floor(sqrt(length(samples))), units = "cm")
+ggsave(file=outputFile, plot = p_mutFreqs_perSample, device = "pdf",height=10*ceiling(length(samples)/colnums), width=10*colnums, units = "cm", limitsize = F)
 
 
 # plot mutation frequencey per position and wild type
