@@ -8,14 +8,14 @@ require(ggplot2)
 require(scales)
 
 #### 1d plots #######
-plotMutCountsForEachSample_1d <- function(coverage1d.df, refSeq.df, nucl.df) {
+plotMutCountsForEachSample_1d <- function(coverage1d.df, refSeq.df=NULL, nucl.df) {
   # has been filtered before, to only contain one sample  
   s <- coverage1d.df$sample[1]
-  L <- nrow(refSeq.df)
+  L <- nrow(coverage1d.df)
   #       #transform mut1 2 and 3 to the respective nucleotide
-    mut_1 =sapply(refSeq.df$asInt, function(x) nucl.df$asInt[-x][1])
-    mut_2 = sapply(refSeq.df$asInt, function(x) nucl.df$asInt[-x][2])
-    mut_3 = sapply(refSeq.df$asInt, function(x) nucl.df$asInt[-x][3])
+    mut_1 =sapply(coverage1d.df$wt, function(x) nucl.df$asInt[-x][1])
+    mut_2 = sapply(coverage1d.df$wt, function(x) nucl.df$asInt[-x][2])
+    mut_3 = sapply(coverage1d.df$wt, function(x) nucl.df$asInt[-x][3])
     
     mut_counts.df=data.frame(wt=rep(nucl.df$asChar[coverage1d.df$wt],3),
                              counts=c(coverage1d.df$mutCount1, 
@@ -40,10 +40,11 @@ plotMutCountsForEachSample_1d <- function(coverage1d.df, refSeq.df, nucl.df) {
   return(p_mutCounts)
 }
 
-plotMutFreqPerWtForEachSample_1d <- function(coverage1d.df, refSeq.df, nucl.df) {
+plotMutFreqPerWtForEachSample_1d <- function(coverage1d.df, refSeq.df, nucl.df=NaN) {
   # has been filtered before, to only contain one sample  
   s <- coverage1d.df$sample[1]
   L <- nrow(refSeq.df)
+  nucl.df = getNucleotide()
   #       #transform mut1 2 and 3 to the respective nucleotide
   mut_1 =sapply(refSeq.df$asInt, function(x) nucl.df$asInt[-x][1])
   mut_2 = sapply(refSeq.df$asInt, function(x) nucl.df$asInt[-x][2])
@@ -59,6 +60,7 @@ plotMutFreqPerWtForEachSample_1d <- function(coverage1d.df, refSeq.df, nucl.df) 
     geom_boxplot(aes(x=wt, y=log10(counts), fill=mut), alpha=0.8)+
     labs(x="wt", y=expression(log[10](frequency)))+
     ggtitle(s)+
+    ylim(-6,0)+
     theme(axis.text = element_text(size=10),
           axis.title = element_text(size=10,face="bold"),
           title = element_text(size=10),
@@ -86,7 +88,8 @@ plotMaxMut_1d <- function(refSeqChar, max_mut_nucl) {
 
 
 # plot mutation frequencey per position and wild type
-plotMutFreqPerPosPerWt <- function(i, coverage1d_all.df, nucl.df, mut=0) {
+plotMutFreqPerPosPerWt <- function(i, coverage1d_all.df, nucl.df=NaN, mut=0) {
+  nucl.df = getNucleotide()
   wtIdx1 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate1>0)
   wtIdx2 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate2>0)
   wtIdx3 <- (coverage1d_all.df$wt == i & coverage1d_all.df$mutRate3>0)
@@ -154,7 +157,8 @@ plotMutFreqPerSamplePerWtBoxplot <- function(i, coverage1d_all.df, nucl.df) {
   return(p_mutFreq_perSamples_perWt_1d)
 }
 
-plotMutFreqPerPosforEachWt <- function(coverage1d_all.df, nucl.df) {
+plotMutFreqPerPosforEachWt <- function(coverage1d_all.df, nucl.df=NaN) {
+  nucl.df = getNucleotide()
   ps_mutFreqPerWt <- lapply(seq(4), plotMutFreqPerPosPerWt, coverage1d_all.df=coverage1d_all.df, nucl.df=nucl.df)
     
   #outputFile = paste0(resultDir, "/",f_name,"_mutFreq_perPos_wt",nucleotides[i],"_1d.pdf")
@@ -173,7 +177,7 @@ plotCoverageAll_1d <- function(coverage1d_all.df, logCov=F) {
     if(logCov)
       p_cov_all <- p_cov_all + geom_line(aes(x=position, y= log10(coverage), color=sample), alpha=0.8, size=1)
     else
-      p_cov_all <- p_cov_all + geom_line(aes(x=position, y= (coverage), color=sample), alpha=0.8, size=1)
+      p_cov_all <- p_cov_all + geom_line(aes(x=position, y= coverage, color=sample), alpha=0.8, size=1)
     
     
   # only change scale of y axis to log10

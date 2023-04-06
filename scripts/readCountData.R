@@ -7,9 +7,10 @@
 #' @return A table structure containing all nucleotide counts per positions for each sample
 #' @example
 #' readCountData_1d(countDir, ref.df, nucl.df)
-readCountData_1d <- function(countDir, ref.df, nucl.df) {
+readCountData_1d <- function(countDir, ref.df, nucl.df=NaN) {
   L=nrow(ref.df)
-
+  
+  nucl.df = getNucleotide()
   countDir1d=paste0(countDir, "/1d")
   coverage1d_all.df=data.frame()
 
@@ -170,7 +171,9 @@ getNucleotide <- function() {
 #' @return A table containing for each sequence position the nucleotide as char and id representation
 #' @example
 #' getRefSeq(referenceFile, nucl.df)
-getRefSeq <- function(referenceFile, nucl.df) {
+getRefSeq <- function(referenceFile, nucl.df=NaN) {
+  if(is.nan(nucl.df))
+    nucl.df = getNucleotide()
   require("seqinr", quietly = T)
   # read and prepare reference information
   refSeqFasta = read.fasta(referenceFile)

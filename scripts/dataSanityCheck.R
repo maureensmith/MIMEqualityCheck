@@ -89,7 +89,6 @@ coverage2d_all.df <- readCountData_2d(countDir, refSeq.df, nucl.df)
 
 # if available, use sample names instead of encoding for the plots
 if(file.exists(sample_sheet_file)) {
-  "samle"
   sample_sheet=read.table(sample_sheet_file,header=T, sep=";")
   if("Sample" %in% colnames(sample_sheet) & "Encoding" %in% colnames(sample_sheet)) {
     coverage1d_all.df["sample"] = sample_sheet$Sample[unlist(sapply(coverage1d_all.df$sample, function(x) which(sample_sheet$Encoding==as.numeric(x))))]
